@@ -1,7 +1,10 @@
+import React from 'react';
+import Header from "./components/Header/Header.tsx";
+
 function App() {
   return (
-    <div>
-      Hello!
+    <div className="App">
+      <Header />
     </div>
   );
 }
