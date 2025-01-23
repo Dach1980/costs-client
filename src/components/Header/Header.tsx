@@ -1,3 +1,4 @@
+import React from 'react'
 import { useTheme } from "../../hooks/index.ts";
 
 const Header = () => {
