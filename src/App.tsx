@@ -4,13 +4,17 @@ import Header from "./components/Header/Header.tsx";
 import { AuthPage } from './components/AuthPage/AuthPage.tsx';
 import { Navigate, Route, BrowserRouter, Routes } from 'react-router-dom';
 import { $auth } from './context/auth.ts';
+import { $alert } from './context/alert.ts';
+import { Alert } from './components/Alert/Alert.tsx';
 
 function App() {
   const isLoggedIn = useUnit($auth);
+  const alert = useUnit($alert)
 
   return (
     <div className="App">
       <Header />
+      {alert.alertText && <Alert props={alert} />}
       <BrowserRouter>
         <Routes>
           <Route path='/' element={isLoggedIn ? <Navigate to='/cost'/> : <Navigate to='login'/>}/>

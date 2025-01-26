@@ -1,5 +1,5 @@
 import api from './axiosClient.ts'
-import { setAuth } from '../context/auth.ts';
+import { setAuth, setUsername } from '../context/auth.ts';
 
 export class AuthClient {
     static async login(username: string, password: string) {
@@ -9,6 +9,7 @@ export class AuthClient {
     
             if (result.status === 200) {
                 setAuth(true);
+                setUsername(result.data.username)
                 localStorage.setItem('auth', JSON.stringify(result.data));
                 return true;
             }

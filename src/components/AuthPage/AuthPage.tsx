@@ -1,8 +1,9 @@
 import React, { useState, useRef, MutableRefObject } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import './styles.css'
 import { AuthClient } from '../../api/authClient.ts';
 import { Spinner } from './../Spinner/Spinner.tsx'
+import { handleAlertMessage } from '../../utils/auth.ts';
+import './styles.css'
 
 export const AuthPage = ({ type }: { type: 'login' | 'registration' }) => {
   const [spinner, setSpinner] = useState(false);
@@ -11,41 +12,48 @@ export const AuthPage = ({ type }: { type: 'login' | 'registration' }) => {
   const navigate = useNavigate();
   const currentAuthTitle = type === 'login' ? 'Войти' : 'Регистрация';
 
-  const handleLogin = async (username: string, password: string) => {
-    if (!username || !password) {
-      return;
-    }
-    const result = await AuthClient.login(username, password);
-
+  const handleAuthResponse = (
+    result: boolean | undefined,
+    navigatePath: string,
+    alertText: string
+  ) => {
     if (!result) {
       setSpinner(false);
       return;
     }
 
     setSpinner(false);
-    navigate('/costs');
-    // setAlert({ alertText: 'Вход выполнен', alertStatus: 'success' });
+    navigate(navigatePath);
+    handleAlertMessage({ alertText, alertStatus: 'success' });
+  }
+
+  const handleLogin = async (username: string, password: string) => {
+    if (!username || !password) {
+      setSpinner(false);
+      handleAlertMessage({ alertText: 'Заполните все поля', alertStatus: 'warning' });
+      return;
+    }
+    const result = await AuthClient.login(username, password);
+
+    handleAuthResponse(result, '/costs', 'Вход выполнен');
   }
 
   const handleRegistration = async (username: string, password: string) => {
     if (!username || !password) {
+      setSpinner(false);
+      handleAlertMessage({ alertText: 'Заполните все поля', alertStatus: 'warning' });
       return;
     }
 
     if (password.length < 4) {
+      setSpinner(false);
+      handleAlertMessage({ alertText: 'Пароль должен содержать более 4 символов', alertStatus: 'warning' });
       return;
     }
 
     const result = await AuthClient.registration(username, password);
 
-    if (!result) {
-      setSpinner(false);
-      return;
-    }
-
-    setSpinner(false);
-    navigate('/login');
-    // setAlert({ alertText: 'Регистрация выполнена', alertStatus: 'success' });
+    handleAuthResponse(result, '/login', 'Регистрация выполнена');
   }
 
   const handleAuth = (event: React.FormEvent<HTMLFormElement>) => {
