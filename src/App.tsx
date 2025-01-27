@@ -6,6 +6,7 @@ import { Navigate, Route, BrowserRouter, Routes } from 'react-router-dom';
 import { $auth } from './context/auth.ts';
 import { $alert } from './context/alert.ts';
 import { Alert } from './components/Alert/Alert.tsx';
+import { CostPage } from './components/CostPage/CostPage.tsx';
 
 function App() {
   const isLoggedIn = useUnit($auth);
@@ -20,7 +21,7 @@ function App() {
           <Route path='/' element={isLoggedIn ? <Navigate to='/cost'/> : <Navigate to='login'/>}/>
           <Route path='/registration' element={isLoggedIn ? <Navigate to='/cost'/> : <AuthPage type='registration'/>}/>
           <Route path='/login' element={isLoggedIn ? <Navigate to='/cost'/> : <AuthPage type='login'/>}/>
-          <Route path='/costs' element={isLoggedIn ? <h1>Costs</h1> : <Navigate to='/login'/>}/>
+          <Route path='/costs' element={isLoggedIn ? <CostPage/> : <Navigate to='/login'/>}/>
         </Routes>
       </BrowserRouter>
     </div>

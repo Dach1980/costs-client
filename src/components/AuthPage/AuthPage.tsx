@@ -83,7 +83,7 @@ export const AuthPage = ({ type }: { type: 'login' | 'registration' }) => {
         </label>
         <label className='auth-label'>
           Введите пароль
-          <input ref={passwordRef} type="text" className='form-control' />
+          <input ref={passwordRef} type="password" className='form-control' />
         </label>
         <button className='btn btn-primary auth-btn'>
           {spinner ? <Spinner top={5} left={20} /> : currentAuthTitle}
