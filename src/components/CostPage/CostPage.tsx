@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { CostHeader } from './CostHeader/CostHeader.tsx'
 import { Spinner } from '../Spinner/Spinner.tsx';
 import { getAuthDataFromLS } from '../../utils/auth.ts';
-import {getsCostsFx} from '../../api/costsClient.ts'
+import {getCostsFx} from '../../api/costsClient.ts'
 import { $costs, setCosts } from '../../context/index.ts';
 import { useUnit } from 'effector-react';
 
@@ -23,7 +23,7 @@ export const CostPage = () => {
         setSpinner(true);
         const authData = getAuthDataFromLS();
 
-        const costs = await getsCostsFx({
+        const costs = await getCostsFx({
             url: '/cost',
             token: authData.access_token
         });

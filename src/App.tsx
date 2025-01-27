@@ -1,16 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useUnit} from 'effector-react'
 import Header from "./components/Header/Header.tsx";
 import { AuthPage } from './components/AuthPage/AuthPage.tsx';
 import { Navigate, Route, BrowserRouter, Routes } from 'react-router-dom';
-import { $auth } from './context/auth.ts';
+import { $auth, setAuth, setUsername } from './context/auth.ts';
 import { $alert } from './context/alert.ts';
 import { Alert } from './components/Alert/Alert.tsx';
 import { CostPage } from './components/CostPage/CostPage.tsx';
+import { getAuthDataFromLS, removeUser } from './utils/auth.ts';
 
 function App() {
   const isLoggedIn = useUnit($auth);
-  const alert = useUnit($alert)
+  const alert = useUnit($alert);
+
+  // useEffect(() => {
+  //   const auth = getAuthDataFromLS();
+
+  //   if(!auth || !auth.access_token || !auth.refresh_token) {
+  //     removeUser();
+  //   } else {
+  //     setAuth(true);
+  //     setUsername(auth.username);
+  //   }
+  // }, [])
 
   return (
     <div className="App">
