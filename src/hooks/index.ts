@@ -11,17 +11,17 @@ export const useTheme = () => {
     }
 
     const switchTheme = () => {
-        const inversMode = theme === 'dark' ? 'light' : 'dark';
-        localStorage.setItem('theme', JSON.stringify(inversMode))
+        const inverseMode = theme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', JSON.stringify(inverseMode));
 
         setCurrentMode(theme)
 
-        setTheme(inversMode);
+        setTheme(inverseMode);
     }
 
     useEffect(() => {
-        setCurrentMode(theme);
-    }, [theme])
+        setCurrentMode(theme)
+    }, [theme]);
 
-    return {switchTheme, theme}
+    return { switchTheme, theme }
 }
